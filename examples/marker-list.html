@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="../dist/leaflet.draw.css"/>
 
   <script src="../src/Toolbar.js"></script>
+  <script src="../src/Toolbar.List.js"></script>
+
   <script src="../src/Tooltip.js"></script>
 
   <script src="../src/ext/LatLngUtil.js"></script>
@@ -57,7 +59,7 @@
 
   map.addControl(drawControl);
 
-  map.on('draw:created', function(e){
+  map.on('draw:created', function (e) {
     editableLayers.addLayer(e.layer);
   });
 </script>
