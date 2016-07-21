@@ -59,8 +59,12 @@
 
   map.addControl(drawControl);
 
+  //drawControl.setDrawingOptions({marker: {repeatMode: true}}); //Doesn't work anymore , but do I really need it ?
+
   map.on('draw:created', function (e) {
-    editableLayers.addLayer(e.layer);
+    if(e.layerType === 'marker'){
+      editableLayers.addLayer(e.layer);
+    }
   });
 </script>
 </body>
