@@ -27,28 +27,29 @@ L.DrawToolbar = L.Toolbar.List.extend({
   },
 
   getModeHandlers: function (map) {
-    return [
-      {
-        enabled: this.options.marker,
-        handler: new L.Draw.Marker(map, this.options.marker),
-        title: L.drawLocal.draw.toolbar.buttons.marker
-      },
-      {
-        enabled: this.options.marker,
-        handler: new L.Draw.Marker(map, this.options.marker),
-        title: L.drawLocal.draw.toolbar.buttons.marker
-      },
-      {
-        enabled: this.options.marker,
-        handler: new L.Draw.Marker(map, this.options.marker),
-        title: L.drawLocal.draw.toolbar.buttons.marker
-      },
-      {
-        enabled: this.options.marker,
-        handler: new L.Draw.Marker(map, this.options.marker),
-        title: L.drawLocal.draw.toolbar.buttons.marker
-      }
+
+    //fetched with a $http.GET
+    var resources = [
+      {label: 'Resource 1'},
+      {label: 'Resource 2'},
+      {label: 'Resource 3'},
+      {label: 'Resource 4'}
     ];
+
+    var modeHandlers = [];
+
+    for(var i = 0; i < resources.length; i++){
+      var modeHandler = {
+        enabled: this.options.marker,
+        handler: new L.Draw.Marker(map, this.options.marker),
+        title: L.drawLocal.draw.toolbar.buttons.marker,
+        label: resources[i].label
+      };
+
+      modeHandlers.push(modeHandler);
+    }
+
+    return modeHandlers;
   },
 
   // Get the actions part of the toolbar
