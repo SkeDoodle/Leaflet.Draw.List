@@ -38,9 +38,12 @@ L.Toolbar.List = L.Toolbar.extend({
     container.appendChild(this._toolbarContainer);
     container.appendChild(this._actionsContainer);
 
+    //when markers are deleted
+    this._map.on('draw:deleted', this._showButton, this);
+
     return container;
   },
-
+  
   _initModeHandler: function (id, handler, container, buttonIndex, classNamePredix, buttonTitle) {
 
     var type = handler.type;
@@ -48,7 +51,7 @@ L.Toolbar.List = L.Toolbar.extend({
     this._modes[id] = {};
 
     this._modes[id].handler = handler;
-    this._modes[id].handler.id = id;
+    this._modes[id].handler.buttonId = id;
 
     this._modes[id].button = this._createButton({
       type: type,
@@ -63,12 +66,14 @@ L.Toolbar.List = L.Toolbar.extend({
 
     this._modes[id].handler
         .on('enabled', this._handlerActivated, this)
-        .on('disabled', this._handlerDeactivated, this);
+        .on('disabled', this._handlerDeactivated, this)
+        .on('draw:hideButton', this._hideButton, this)
+        .on('draw:showButton', this._showButton, this);
   },
 
   _handlerActivated: function (e) {
 
-    var index = e.target.id;
+    var index = e.target.buttonId;
 
     // Disable active mode (if present)
     this.disable();
@@ -81,5 +86,23 @@ L.Toolbar.List = L.Toolbar.extend({
     this._showActionsToolbar();
 
     this.fire('enable');
+  },
+
+  _hideButton: function(e){
+    if(typeof this._modes[e.buttonId] !== 'undefined'){
+      this._modes[e.buttonId].button.style.display = 'none';
+    }
+  },
+
+  _showButton: function(e){
+    var layers = e.layers;
+
+    layers.eachLayer(function(layer){
+      if(typeof layer.options.buttonId !== 'undefined' && typeof this._modes[layer.options.buttonId] !== 'undefined'){
+        this._modes[layer.options.buttonId].button.style.display = 'block';
+      }
+    }, this);
+
   }
+  
 });
