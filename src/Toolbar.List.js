@@ -18,7 +18,8 @@ L.Toolbar.List = L.Toolbar.extend({
             this._toolbarContainer,
             buttonIndex++,
             buttonClassPrefix,
-            modeHandlers[i].title
+            modeHandlers[i].title,
+            modeHandlers[i].label
         );
       }
     }
@@ -44,9 +45,11 @@ L.Toolbar.List = L.Toolbar.extend({
     return container;
   },
   
-  _initModeHandler: function (id, handler, container, buttonIndex, classNamePredix, buttonTitle) {
+  _initModeHandler: function (id, handler, container, buttonIndex, classNamePredix, buttonTitle, buttonLabel) {
 
     var type = handler.type;
+
+    var text = buttonLabel || '';
 
     this._modes[id] = {};
 
@@ -59,7 +62,8 @@ L.Toolbar.List = L.Toolbar.extend({
       className: classNamePredix + '-' + type,
       container: container,
       callback: this._modes[id].handler.enable,
-      context: this._modes[id].handler
+      context: this._modes[id].handler,
+      text: text
     });
 
     this._modes[id].buttonIndex = buttonIndex;
@@ -69,6 +73,28 @@ L.Toolbar.List = L.Toolbar.extend({
         .on('disabled', this._handlerDeactivated, this)
         .on('draw:hideButton', this._hideButton, this)
         .on('draw:showButton', this._showButton, this);
+  },
+
+  _createButton: function(options){
+    var link = L.DomUtil.create('a', options.className || '', options.container);
+    link.href = '#';
+
+    if (options.text) {
+      link.innerHTML = options.text;
+    }
+
+    if (options.title) {
+      link.title = options.title;
+    }
+
+    L.DomEvent
+        .on(link, 'click', L.DomEvent.stopPropagation)
+        .on(link, 'mousedown', L.DomEvent.stopPropagation)
+        .on(link, 'dblclick', L.DomEvent.stopPropagation)
+        .on(link, 'click', L.DomEvent.preventDefault)
+        .on(link, 'click', options.callback, options.context);
+
+    return link;
   },
 
   _handlerActivated: function (e) {
@@ -86,6 +112,32 @@ L.Toolbar.List = L.Toolbar.extend({
     this._showActionsToolbar();
 
     this.fire('enable');
+  },
+
+  _showActionsToolbar: function () {
+    var buttonIndex = this._activeMode.buttonIndex,
+        lastButtonIndex = this._lastButtonIndex,
+        toolbarTopPosition = this._activeMode.button.offsetTop - 1,
+        toolbarLeftPostition = this._activeMode.button.clientWidth;
+
+    // Recreate action buttons on every click
+    this._createActions(this._activeMode.handler);
+
+    // Correctly position the cancel button
+    this._actionsContainer.style.top = toolbarTopPosition + 'px';
+    this._actionsContainer.style.left = toolbarLeftPostition + 'px';
+
+    if (buttonIndex === 0) {
+      L.DomUtil.addClass(this._toolbarContainer, 'leaflet-draw-toolbar-notop');
+      L.DomUtil.addClass(this._actionsContainer, 'leaflet-draw-actions-top');
+    }
+
+    if (buttonIndex === lastButtonIndex) {
+      L.DomUtil.addClass(this._toolbarContainer, 'leaflet-draw-toolbar-nobottom');
+      L.DomUtil.addClass(this._actionsContainer, 'leaflet-draw-actions-bottom');
+    }
+
+    this._actionsContainer.style.display = 'block';
   },
 
   _hideButton: function(e){

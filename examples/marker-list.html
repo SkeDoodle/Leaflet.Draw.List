@@ -9,6 +9,7 @@
 
   <script src="../src/Leaflet.draw.js"></script>
   <link rel="stylesheet" href="../dist/leaflet.draw.css"/>
+  <link rel="stylesheet" href="../dist/leaflet.draw.list.css"/>
 
   <script src="../src/Toolbar.js"></script>
   <script src="../src/Toolbar.List.js"></script>
@@ -48,6 +49,7 @@
   map.addLayer(editableLayers);
 
   var drawControl = new L.Control.Draw({
+    position: 'topleft',
     draw: {
       marker: true
     },

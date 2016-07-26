@@ -1,0 +1,9 @@
+.leaflet-bar a.leaflet-draw-draw-marker{
+  width: auto;
+  background-image: none;
+  padding: 0 2px;
+}
+
+.leaflet-draw-toolbar{
+  display: inline-block;
+}
