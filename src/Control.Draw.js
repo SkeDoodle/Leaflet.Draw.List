@@ -81,6 +81,16 @@ L.Control.Draw = L.Control.extend({
     }
   },
 
+  setToolbarButtons: function(resources){
+    var i;
+
+    var modeHandlers = this._toolbars.draw.getModeHandlers(this._map, resources);
+    
+    for(i = 0; i < modeHandlers.length; i++){
+        this._toolbars.draw.addToolbar(this._map, modeHandlers);
+    }
+  },
+
   _toolbarEnabled: function (e) {
     var enabledToolbar = e.target;
 

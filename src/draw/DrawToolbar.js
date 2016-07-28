@@ -23,18 +23,13 @@ L.DrawToolbar = L.Toolbar.List.extend({
     }
 
     this._toolbarClass = 'leaflet-draw-draw';
-    L.Toolbar.prototype.initialize.call(this, options);
+    L.Toolbar.List.prototype.initialize.call(this, options);
   },
 
-  getModeHandlers: function (map) {
+  getModeHandlers: function (map, resources) {
 
-    //fetched with a $http.GET
-    var resources = [
-      {label: 'Resource 1'},
-      {label: 'Resource 2'},
-      {label: 'Resource 3'},
-      {label: 'Resource 4'}
-    ];
+    //TODO fetch resources with a $http.GET
+    resources = resources || [];
 
     var modeHandlers = [];
 

@@ -1,11 +1,12 @@
 L.Toolbar.List = L.Toolbar.extend({
 
-  addToolbar: function (map) {
+  addToolbar: function (map, resources) {
     var container = L.DomUtil.create('div', 'leaflet-draw-section'),
         buttonIndex = 0,
         buttonClassPrefix = this._toolbarClass || '',
-        modeHandlers = this.getModeHandlers(map),
         i;
+
+    var modeHandlers = resources || this.getModeHandlers(map);
 
     this._toolbarContainer = L.DomUtil.create('div', 'leaflet-draw-toolbar leaflet-bar');
     this._map = map;
