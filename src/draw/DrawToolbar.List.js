@@ -1,14 +1,10 @@
-L.DrawToolbar = L.Toolbar.List.extend({
+L.DrawToolbar.List = L.Toolbar.List.extend({
 
   statics: {
     TYPE: 'draw'
   },
 
   options: {
-    polyline: {},
-    polygon: {},
-    rectangle: {},
-    circle: {},
     marker: {}
   },
 
@@ -29,14 +25,21 @@ L.DrawToolbar = L.Toolbar.List.extend({
   getModeHandlers: function (map, resources) {
 
     //TODO fetch resources with a $http.GET
-    resources = resources || [];
+    // resources = resources || [];
+
+    resources = [
+      {'label': 'Resource 1'},
+      {'label': 'Resource 2'},
+      {'label': 'Resource 3'},
+      {'label': 'Resource 4'}
+    ];
 
     var modeHandlers = [];
 
     for(var i = 0; i < resources.length; i++){
       var modeHandler = {
         enabled: this.options.marker,
-        handler: new L.Draw.Marker(map, this.options.marker),
+        handler: new L.Draw.Marker.List(map, this.options.marker),
         title: L.drawLocal.draw.toolbar.buttons.marker,
         label: resources[i].label
       };
@@ -46,7 +49,6 @@ L.DrawToolbar = L.Toolbar.List.extend({
 
     return modeHandlers;
   },
-
   // Get the actions part of the toolbar
   getActions: function (handler) {
     return [
@@ -71,15 +73,5 @@ L.DrawToolbar = L.Toolbar.List.extend({
         context: this
       }
     ];
-  },
-
-  setOptions: function (options) {
-    L.setOptions(this, options);
-
-    for (var type in this._modes) {
-      if (this._modes.hasOwnProperty(type) && options.hasOwnProperty(type)) {
-        this._modes[type].handler.setOptions(options[type]);
-      }
-    }
   }
 });

@@ -6,30 +6,17 @@
 
   <script src="libs/leaflet-src.js"></script>
   <link rel="stylesheet" href="libs/leaflet.css">
-
-  <script src="../src/Leaflet.draw.js"></script>
+  <script src="libs/leaflet.draw-src.js"></script>
   <link rel="stylesheet" href="../dist/leaflet.draw.css"/>
+
+
   <link rel="stylesheet" href="../dist/leaflet.draw.list.css"/>
 
-  <script src="../src/Toolbar.js"></script>
   <script src="../src/Toolbar.List.js"></script>
+  <script src="../src/draw/DrawToolbar.List.js"></script>
+  <script src="../src/draw/handler/Draw.Marker.List.js"></script>
+  <script src="../src/Control.Draw.List.js"></script>
 
-  <script src="../src/Tooltip.js"></script>
-
-  <script src="../src/ext/LatLngUtil.js"></script>
-  <script src="../src/ext/TouchEvents.js"></script>
-
-  <script src="../src/draw/DrawToolbar.js"></script>
-  <script src="../src/draw/handler/Draw.Feature.js"></script>
-  <script src="../src/draw/handler/Draw.Marker.js"></script>
-
-  <script src="../src/edit/EditToolbar.js"></script>
-  <script src="../src/edit/handler/EditToolbar.Edit.js"></script>
-  <script src="../src/edit/handler/EditToolbar.Delete.js"></script>
-
-  <script src="../src/Control.Draw.js"></script>
-
-  <script src="../src/edit/handler/Edit.Marker.js"></script>
 </head>
 <body>
 <div id="map" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
@@ -47,7 +34,7 @@
   var editableLayers = new L.featureGroup();
   map.addLayer(editableLayers);
 
-  var drawControl = new L.Control.Draw({
+  var drawListControl = new L.Control.Draw.List({
     position: 'topleft',
     draw: {
       marker: true
@@ -58,6 +45,18 @@
     }
   });
 
+  var drawAreaControl = new L.Control.Draw({
+    position: 'topleft',
+    draw: {
+      polygon: true,
+      polyline: false,
+      rectangle : false,
+      circle: false,
+      marker: false
+    },
+    edit: false
+  });
+
   //TODO fetch with a GET
   var resources = [
     {'label': 'Resource 1'},
@@ -66,19 +65,19 @@
     {'label': 'Resource 4'}
   ];
 
+  map.addControl(drawAreaControl);
+  map.addControl(drawListControl);
 
-
-  map.addControl(drawControl);
-
-  //drawControl.setDrawingOptions({marker: {repeatMode: true}}); //Doesn't work anymore , but do I really need it ?
+  //drawListControl.setDrawingOptions({marker: {repeatMode: true}}); //Doesn't work anymore , but do I really need it ?
 
   map.on('draw:created', function (e) {
     if(e.layerType === 'marker'){
-      editableLayers.addLayer(e.layer);
+
     }
+    editableLayers.addLayer(e.layer);
   });
 
-  drawControl.setToolbarButtons(resources);
+//  drawListControl.setToolbarButtons(resources);
 </script>
 </body>
 </html>

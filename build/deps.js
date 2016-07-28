@@ -8,8 +8,8 @@ var deps = {
 
 	DrawHandlers: {
 		src: [
-			'draw/handler/Draw.Feature.js',
-			'draw/handler/Draw.Marker.js'
+			'draw/handler/Draw.Feature_old.js',
+			'draw/handler/Draw.Marker.List.js'
 		],
 		desc: 'Drawing handlers for: polylines, polygons, rectangles, circles and markers.',
 		deps: ['Core']
@@ -17,7 +17,7 @@ var deps = {
 
 	EditHandlers: {
 		src: [
-			'edit/handler/Edit.Marker.js'
+			'edit/handler/Edit.Marker_old.js'
 		],
 		desc: 'Editing handlers for: polylines, polygons, rectangles, and circles.',
 		deps: ['Core']
@@ -44,7 +44,7 @@ var deps = {
 
 	DrawUI: {
 		src: [
-			'draw/DrawToolbar.js'
+			'draw/DrawToolbar.List.js'
 		],
 		desc: 'Draw toolbar.',
 		deps: ['DrawHandlers', 'CommonUI']
@@ -52,9 +52,9 @@ var deps = {
 
 	EditUI: {
 		src: [
-			'edit/EditToolbar.js',
-			'edit/handler/EditToolbar.Edit.js',
-			'edit/handler/EditToolbar.Delete.js'
+			'edit/EditToolbar_old.js',
+			'edit/handler/EditToolbar.Edit_old.js',
+			'edit/handler/EditToolbar.Delete_old.js'
 		],
 		desc: 'Edit toolbar.',
 		deps: ['EditHandlers', 'CommonUI']
