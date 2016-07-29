@@ -1,7 +1,7 @@
 L.DrawToolbar.List = L.Toolbar.List.extend({
 
   statics: {
-    TYPE: 'draw'
+    TYPE: 'draw-list'
   },
 
   options: {
@@ -22,7 +22,7 @@ L.DrawToolbar.List = L.Toolbar.List.extend({
     L.Toolbar.List.prototype.initialize.call(this, options);
   },
 
-  getModeHandlers: function (map, resources) {
+  getModeHandlers: function (map) {
 
     //TODO fetch resources with a $http.GET
     // resources = resources || [];
@@ -35,6 +35,14 @@ L.DrawToolbar.List = L.Toolbar.List.extend({
     ];
 
     var modeHandlers = [];
+
+    var areaHandler = {
+      enabled: this.options.polygon,
+      handler: new L.Draw.Polygon(map, this.options.polygon),
+      title: L.drawLocal.draw.toolbar.buttons.polygon
+    };
+
+    modeHandlers.push(areaHandler);
 
     for(var i = 0; i < resources.length; i++){
       var modeHandler = {

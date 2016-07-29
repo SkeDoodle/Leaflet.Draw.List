@@ -37,7 +37,8 @@
   var drawListControl = new L.Control.Draw.List({
     position: 'topleft',
     draw: {
-      marker: true
+      marker: true,
+      polygon: true
     },
     edit: {
       featureGroup: editableLayers,
@@ -45,7 +46,7 @@
     }
   });
 
-  var drawAreaControl = new L.Control.Draw({
+  /*var drawAreaControl = new L.Control.Draw({
     position: 'topleft',
     draw: {
       polygon: true,
@@ -54,8 +55,10 @@
       circle: false,
       marker: false
     },
-    edit: false
-  });
+    edit: {
+      featureGroup: editableLayers
+    }
+  });*/
 
   //TODO fetch with a GET
   var resources = [
@@ -65,7 +68,6 @@
     {'label': 'Resource 4'}
   ];
 
-  map.addControl(drawAreaControl);
   map.addControl(drawListControl);
 
   //drawListControl.setDrawingOptions({marker: {repeatMode: true}}); //Doesn't work anymore , but do I really need it ?

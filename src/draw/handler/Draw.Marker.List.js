@@ -15,10 +15,10 @@ L.Draw.Marker.List = L.Draw.Marker.extend({
 
     L.Draw.Feature.prototype.initialize.call(this, map, options);
   },
-
+  
   _fireCreatedEvent: function () {
     var marker = new L.Marker.Touch(this._marker.getLatLng(), {icon: this.options.icon, buttonId: this.buttonId});
-   this.fire('draw:hideButton', {buttonId: this.buttonId});
+    this.fire('draw:hideButton', {buttonId: this.buttonId});
     L.Draw.Feature.prototype._fireCreatedEvent.call(this, marker);
   }
 });

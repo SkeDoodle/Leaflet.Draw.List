@@ -11,7 +11,7 @@ L.Control.Draw.List = L.Control.Draw.extend({
       throw new Error('Leaflet.draw 0.2.3+ requires Leaflet 0.7.0+. Download latest from https://github.com/Leaflet/Leaflet/');
     }
 
-    L.Control.Draw.prototype.initialize.call(this, options);
+    L.Control.prototype.initialize.call(this, options);
 
     var toolbar;
 
@@ -41,7 +41,7 @@ L.Control.Draw.List = L.Control.Draw.extend({
   setToolbarButtons: function(resources){
     var i;
 
-    var modeHandlers = this._toolbars.draw.getModeHandlers(this._map, resources);
+    var modeHandlers = this._toolbars.draw.getModeHandlers(this._map);
     
     for(i = 0; i < modeHandlers.length; i++){
         this._toolbars.draw.addToolbar(this._map, modeHandlers);
@@ -56,7 +56,7 @@ L.Map.mergeOptions({
 
 L.Map.addInitHook(function () {
   if (this.options.drawControl) {
-    this.drawControl = new L.Control.Draw();
+    this.drawControl = new L.Control.Draw.List();
     this.addControl(this.drawControl);
   }
 });
