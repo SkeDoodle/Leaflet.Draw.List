@@ -6,17 +6,18 @@
 
   <script src="libs/leaflet-src.js"></script>
   <link rel="stylesheet" href="libs/leaflet.css">
+
   <script src="libs/leaflet.draw-src.js"></script>
   <link rel="stylesheet" href="../dist/leaflet.draw.css"/>
 
-
   <link rel="stylesheet" href="../dist/leaflet.draw.list.css"/>
 
-  <script src="../src/Toolbar.List.js"></script>
-  <script src="../src/draw/DrawToolbar.List.js"></script>
   <script src="../src/draw/handler/Draw.Marker.List.js"></script>
-  <script src="../src/Control.Draw.List.js"></script>
 
+  <script src="../src/Control.Draw.List.js"></script>
+  <script src="../src/Toolbar.List.js"></script>
+
+  <script src="../src/draw/DrawToolbar.List.js"></script>
 </head>
 <body>
 <div id="map" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
@@ -24,7 +25,8 @@
 <script>
   var map = L.map('map', {
     crs: L.CRS.Simple,
-    minZoom: -3
+    minZoom: -3,
+    attributionControl: false
   });
 
   var bounds = [[0, 0], [2000, 3000]];
@@ -36,31 +38,18 @@
 
   var drawListControl = new L.Control.Draw.List({
     position: 'topleft',
-    draw: {
-      marker: true,
-      polygon: true
-    },
     edit: {
       featureGroup: editableLayers,
       remove: true
     }
   });
 
-  /*var drawAreaControl = new L.Control.Draw({
-    position: 'topleft',
-    draw: {
-      polygon: true,
-      polyline: false,
-      rectangle : false,
-      circle: false,
-      marker: false
-    },
-    edit: {
-      featureGroup: editableLayers
-    }
-  });*/
+  map.addControl(drawListControl);
 
-  //TODO fetch with a GET
+  map.on('draw:created', function (e) {
+    editableLayers.addLayer(e.layer);
+  });
+
   var resources = [
     {'label': 'Resource 1'},
     {'label': 'Resource 2'},
@@ -68,18 +57,7 @@
     {'label': 'Resource 4'}
   ];
 
-  map.addControl(drawListControl);
 
-  //drawListControl.setDrawingOptions({marker: {repeatMode: true}}); //Doesn't work anymore , but do I really need it ?
-
-  map.on('draw:created', function (e) {
-    if(e.layerType === 'marker'){
-
-    }
-    editableLayers.addLayer(e.layer);
-  });
-
-//  drawListControl.setToolbarButtons(resources);
 </script>
 </body>
 </html>

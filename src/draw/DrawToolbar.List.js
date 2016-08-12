@@ -24,25 +24,9 @@ L.DrawToolbar.List = L.Toolbar.List.extend({
 
   getModeHandlers: function (map) {
 
-    //TODO fetch resources with a $http.GET
-    // resources = resources || [];
-
-    resources = [
-      {'label': 'Resource 1'},
-      {'label': 'Resource 2'},
-      {'label': 'Resource 3'},
-      {'label': 'Resource 4'}
-    ];
+    var resources = [];
 
     var modeHandlers = [];
-
-    var areaHandler = {
-      enabled: this.options.polygon,
-      handler: new L.Draw.Polygon(map, this.options.polygon),
-      title: L.drawLocal.draw.toolbar.buttons.polygon
-    };
-
-    modeHandlers.push(areaHandler);
 
     for(var i = 0; i < resources.length; i++){
       var modeHandler = {

@@ -2,7 +2,7 @@ L.Control.Draw.List = L.Control.Draw.extend({
 
   options: {
     position: 'topleft',
-    draw: {},
+    list: [],
     edit: false
   },
 
@@ -18,8 +18,8 @@ L.Control.Draw.List = L.Control.Draw.extend({
     this._toolbars = {};
 
     // Initialize toolbars
-    if (L.DrawToolbar.List && this.options.draw) {
-      toolbar = new L.DrawToolbar.List(this.options.draw);
+    if (L.DrawToolbar.List && Array.isArray(this.options.list)) {
+      toolbar = new L.DrawToolbar.List(this.options.list);
 
       this._toolbars[L.DrawToolbar.List.TYPE] = toolbar;
 
